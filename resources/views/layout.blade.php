@@ -73,7 +73,7 @@
                     </ul>
                 </li>
                 <li class="sidebar-item">
-                    <a href="listar-clientes.html" class="sidebar-link">
+                    <a href="{{ route('clients.index') }}" class="sidebar-link">
                         <i class="bi bi-people"></i>
                         <span>Clientes</span>
                     </a>
