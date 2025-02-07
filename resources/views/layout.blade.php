@@ -65,10 +65,10 @@
                     </a>
                     <ul id="productos" class="sidebar-dropdown list-unstyled collapse" data-bs-parent="#sidebar">
                         <li class="sidebar-item">
-                            <a href="listar-productos.html" class="sidebar-link"><i class="bi bi-list"></i> Todos</a>
+                            <a href="{{ route('products.index') }}" class="sidebar-link"><i class="bi bi-list"></i> Todos</a>
                         </li>
                         <li class="sidebar-item">
-                            <a href="crear-productos.html" class="sidebar-link"><i class="bi bi-plus-square"></i> Crear</a>
+                            <a href="{{ route('products.create') }}" class="sidebar-link"><i class="bi bi-plus-square"></i> Crear</a>
                         </li>
                     </ul>
                 </li>
