@@ -14,6 +14,10 @@
     @csrf
     <div class="row mb-3">
         <div class="col-sm-6 mb-3">
+            <label for="id" class="form-label">ID</label>
+            <input type="text" name="id" id="id" class="form-control" disabled value="{{ $item->id }}"/>
+        </div>
+        <div class="col-sm-6 mb-3">
             <label for="nombre" class="form-label">Nombre</label>
             <input type="text" name="nombre" id="nombre" class="form-control" value="{{ $item->name }}" />
             @if ($errors->has('nombre'))
