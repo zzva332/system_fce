@@ -56,6 +56,7 @@
             @endif
         </div>
     </div>
+    <a href="{{ route('usuarios.index') }}" class="btn btn-secondary">Regresar</a>
     <button type="submit" class="btn btn-dark">Guardar</button>
 </form>
 @endsection
