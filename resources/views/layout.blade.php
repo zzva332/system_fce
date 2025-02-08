@@ -46,14 +46,14 @@
                     <a href="#" class="sidebar-link collapsed has-dropdown" data-bs-toggle="collapse"
                         data-bs-target="#inventario" aria-expanded="false" aria-controls="inventario">
                         <i class="bi bi-box"></i>
-                        <span>Inventario</span>
+                        <span>Inventarios</span>
                     </a>
                     <ul id="inventario" class="sidebar-dropdown list-unstyled collapse" data-bs-parent="#sidebar">
                         <li class="sidebar-item">
-                            <a href="listar-inventarios.html" class="sidebar-link"><i class="bi bi-list"></i> Todos</a>
+                            <a href="{{ route('inventories.index') }}" class="sidebar-link"><i class="bi bi-list"></i> Todos</a>
                         </li>
                         <li class="sidebar-item">
-                            <a href="crear-inventarios.html" class="sidebar-link"><i class="bi bi-plus-square"></i> Crear</a>
+                            <a href="{{ route('inventories.create') }}" class="sidebar-link"><i class="bi bi-plus-square"></i> Crear</a>
                         </li>
                     </ul>
                 </li>

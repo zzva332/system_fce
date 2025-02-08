@@ -6,6 +6,7 @@
 @section('content')
 <div class="mb-4">
     <h1 class="h2">Editar usuario del sistema</h1>
+    <h2 class="h5">({{$user->name}})</h2>
     <hr/>
 </div>
 
@@ -56,7 +57,7 @@
             @endif
         </div>
     </div>
-    <a href="{{ route('usuarios.index') }}" class="btn btn-secondary">Regresar</a>
+    <a href="{{ route('users.index') }}" class="btn btn-secondary">Regresar</a>
     <button type="submit" class="btn btn-dark">Guardar</button>
 </form>
 @endsection

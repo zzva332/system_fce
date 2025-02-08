@@ -5,7 +5,8 @@
 
 @section('content')
 <div class="mb-4">
-    <h1 class="h2">Crear usuario del sistema</h1>
+    <h1 class="h2">Editar producto</h1>
+    <h2 class="h5">({{$item->name}})</h2>
     <hr/>
 </div>
 
