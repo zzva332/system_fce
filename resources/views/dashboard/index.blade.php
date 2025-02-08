@@ -26,7 +26,7 @@
     <div class="col-12 col-md col-sm-6 mb-4">
         <div class="card p-2 d-flex justify-content-center align-items-center">
             <span class="h1"><i class="bi bi-clock"></i></span>
-            <span class="h2">23</span>
+            <span class="h2">{{$totalLowInventory}}</span>
             <span>Inventario por agotarse</span>
         </div>
     </div>

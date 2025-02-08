@@ -99,6 +99,7 @@ class InventoryController extends Controller
         $item->stock = $validated["stock"];
         $item->iva = $validated["iva"];
         $item->discount = $validated["descuento"];
+        $item->updated_at = $item->freshTimestamp();
 
         if ($item->save()) {
             return redirect()->route('inventories.index');

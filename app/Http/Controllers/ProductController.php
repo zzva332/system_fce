@@ -95,6 +95,7 @@ class ProductController extends Controller
         $item->name = $validated["nombre"];
         $item->price = $validated["precio"];
         $item->description = $validated["descripcion"];
+        $item->updated_at = $item->freshTimestamp();
 
         if ($item->save()) {
             return redirect()->route('products.index');

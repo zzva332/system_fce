@@ -106,6 +106,7 @@ class ClientController extends Controller
         $item->email = $validated["email"];
         $item->type_id = $validated["tipo_id"];
         $item->document = $validated["documento"];
+        $item->updated_at = $item->freshTimestamp();
 
         if ($item->save()) {
             return redirect()->route('clients.index');

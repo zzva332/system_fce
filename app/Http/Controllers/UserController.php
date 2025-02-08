@@ -104,6 +104,7 @@ class UserController extends Controller
         if (!empty($validated['password'])){
             $user->password = Hash::make($validated['password']);
         }
+        $user->updated_at = $user->freshTimestamp();
 
         if ($user->save()){
             return redirect()->route('users.index');
