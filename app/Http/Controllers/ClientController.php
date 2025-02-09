@@ -132,7 +132,7 @@ class ClientController extends Controller
         return redirect()->route('clients.index');
     }
 
-    private function get_type_id_list(){
+    public function get_type_id_list(){
         return [
             ['key' => 'CC', 'value' => 'Cedula ciudadania'],
             ['key' => 'CE', 'value' => 'Cedula extranjeria'],
