@@ -194,15 +194,15 @@ class InvoiceController extends Controller
         $count_products = 0;
         foreach($invoices->products as $product) {
             // total producto
-            $total_products += $product->gross_value;
+            $total_products += $product->gross_value * $product->count;
             $count_products += $product->count;
             // descuento por producto
             $discount = $product->gross_value * ($product->discount / 100);
-            $total_iva += ($product->gross_value - $discount) * ($product->iva / 100); 
-            $total_discount +=  $discount;
+            $total_iva += ($product->gross_value - $discount) * ($product->iva / 100) * $product->count; 
+            $total_discount +=  $discount * $product->count;
         }
 
-        $total = $total_products + $total_iva + $total_discount;
+        $total = $total_products + $total_iva - $total_discount;
 
         return view('invoices.show', [
             'invoice' => $invoices,
