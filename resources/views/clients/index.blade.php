@@ -22,7 +22,7 @@
     <tbody>
         @foreach ($clients as $item)
             <tr>
-                <td>{{ $item->id }}</td>
+                <td><a href="{{ route('clients.edit', $item->id) }}">{{ $item->id }}</a></td>
                 <td>{{ $item->name }}</td>
                 <td>{{ $item->email }}</td>
                 <td>{{ $item->type_id }}</td>

@@ -24,7 +24,7 @@
     <tbody>
         @foreach ($inventories as $item)
             <tr>
-                <td>{{ $item->id }}</td>
+                <td><a href="{{ route('inventories.edit', $item->id) }}">#{{ $item->id }}</a></td>
                 <td>{{ $item->product->name }}</td>
                 <td>{{ $item->product->price }}</td>
                 <td>{{ $item->stock }}</td>

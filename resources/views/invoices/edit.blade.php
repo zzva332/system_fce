@@ -37,47 +37,40 @@
         <div class="d-flex justify-content-end">
             <button type="button" id="add-new-products" class="btn btn-sm btn-dark"><i class="bi bi-plus-lg"></i></button>
         </div>
-        <div class="card p-3 mb-3" id="item-1">
-            <div class="row mb-3">
-                <div class="col-sm-6">
-                    <label for="nombreProd1" class="form-label">Producto</label>
-                    <select name="nombreProd1" id="nombreProd1" class="form-control">
-                        <option value="" hidden>-- Seleccionar producto --</option>
-                        <option value="producto1">Producto 1</option>
-                        <option value="producto1">Producto 2</option>
-                        <option value="producto1">Producto 3</option>
-                    </select>
+        @foreach($item->products as $key => $product)
+            <div class="card p-3 mb-3" id="item-{{$key + 1}}">
+                <div class="row mb-3">
+                    <div class="col-sm-6">
+                        <label for="productos_id_{{$key}}" class="form-label">Producto</label>
+                        {{$product->product_id}}
+                        <select name="productos_id[]" id="productos_id_{{$key}}" class="form-control">
+                            <option value="" hidden>-- Seleccionar producto --</option>
+                            @foreach($products as $item)
+
+                                <option value="{{$item->product_id}}" 
+                                    @if ($item->product_id == $product->product_id) selected="" @endif
+                                >{{ $item->product->name }}</option>
+                            @endforeach
+                        </select>
+                    </div>
+                    <div class="col-sm-6">
+                        <label for="productos_count{{$key}}" class="form-label">Cantidad</label>
+                        <input type="text" name="productos_count[]" id="productos_count{{$key}}" class="form-control" value="{{ $product->count }}" />
+                    </div>
                 </div>
-                <div class="col-sm-6">
-                    <label for="cantidadProd1" class="form-label">Cantidad</label>
-                    <input type="text" name="cantidadProd1" id="cantidadProd1" class="form-control" />
-                </div>
+                @if ($key != 0)
+                    <button type="button" class="btn btn-sm btn-dark remove-productos"><i class="bi bi-dash"></i></button>
+                @endif
+
             </div>
-        </div>
-        <div class="card p-3 mb-3" id="item-2">
-            <div class="row mb-3">
-                <div class="col-sm-6">
-                    <label for="nombreProd1" class="form-label">Producto</label>
-                    <select name="nombreProd1" id="nombreProd1" class="form-control">
-                        <option value="" hidden>-- Seleccionar producto --</option>
-                        <option value="producto1">Producto 1</option>
-                        <option value="producto1">Producto 2</option>
-                        <option value="producto1">Producto 3</option>
-                    </select>
-                </div>
-                <div class="col-sm-6">
-                    <label for="cantidadProd1" class="form-label">Cantidad</label>
-                    <input type="text" name="cantidadProd1" id="cantidadProd1" class="form-control" />
-                </div>
-            </div>
-            <button type="button" class="btn btn-sm btn-dark remove-productos"><i class="bi bi-dash"></i></button>
-        </div>
+        @endforeach
     </div>
     <div class="row mb-3">
         <h3 class="col-12 h4">Cliente</h3>
         <div class="col-12">
             <label for="cliente" class="form-label">Seleccione el cliente a vincular (si no posee registre uno primero o deje vacio)</label>
             <select class="form-control form-control-md" name="cliente" id="cliente">
+                <option value="" hidden>-- seleccionar cliente (puede cambiarse despues) --</option>
                 @foreach($clients as $item)
                     <option value="{{ $item->id }}">({{ $item->document }}) {{ $item->name }} | {{ $item->email }}</option>
                 @endforeach

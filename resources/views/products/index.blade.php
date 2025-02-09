@@ -23,7 +23,7 @@
     <tbody>
         @foreach ($products as $item)
             <tr>
-                <td>{{ $item->id }}</td>
+                <td><a href="{{ route('products.edit', $item->id) }}">{{ $item->id }}</a></td>
                 <td>{{ $item->code }}</td>
                 <td>{{ $item->name }}</td>
                 <td>{{ $item->price }}</td>

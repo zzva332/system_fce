@@ -43,30 +43,16 @@
 <div class="card mb-3 p-3">
     <h3 class="text-center">Productos</h3>
     <div class="row">
-        <div class="col-12 col-sm-4">
-            <div class="card p-2">
-                <p>Producto: <span>XXXXXXX</span></p>
-                <p>Cantidad: <span>XX</span></p>
-                <p>Valor descuento: <span>XXXXXX</span></p>
-                <p>Precio: <span>XXXX</span></p>
+        @foreach ($invoice->products as $product)
+            <div class="col-12 col-sm-4">
+                <div class="card p-2">
+                    <p>Producto: <span>{{ $product->product->name }}</span></p>
+                    <p>Cantidad: <span>{{ $product->count }}</span></p>
+                    <p>descuento: <span>{{ $product->discount}}%</span></p>
+                    <p>Precio: <span>{{ $product->gross_value }}</span></p>
+                </div>
             </div>
-        </div>
-        <div class="col-12 col-sm-4">
-            <div class="card p-2">
-                <p>Producto: <span>XXXXXXX</span></p>
-                <p>Cantidad: <span>XX</span></p>
-                <p>Valor descuento: <span>XXXXXX</span></p>
-                <p>Precio: <span>XXXX</span></p>
-            </div>
-        </div>
-        <div class="col-12 col-sm-4">
-            <div class="card p-2">
-                <p>Producto: <span>XXXXXXX</span></p>
-                <p>Cantidad: <span>XX</span></p>
-                <p>Valor descuento: <span>XXXXXX</span></p>
-                <p>Precio: <span>XXXX</span></p>
-            </div>
-        </div>
+        @endforeach
     </div>
 </div>
 <div class="row">

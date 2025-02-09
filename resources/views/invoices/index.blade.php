@@ -23,7 +23,7 @@
     <tbody>
         @foreach ($invoices as $item)
             <tr>
-                <td>{{ $item->id }}</td>
+                <td><a href="{{ route('invoices.show', $item->id) }}">#{{ $item->id }}</a></td>
                 <td> {{ substr($item->reference, 0, 8) }}...{{ substr($item->reference, -8) }}</td>
                 <td>{{ $item->category_name }}</td>
                 <td>
@@ -36,7 +36,6 @@
                     <a href="{{ route('invoices.show', $item->id) }}" class="btn btn-dark btn-sm"><i class="bi bi-eye-fill"></i></a>
                     <a href="#" class="btn btn-dark btn-sm" data-bs-toggle="dropdown" aria-expanded="false"><i class="bi bi-three-dots-vertical"></i></a>
                     <ul class="dropdown-menu">
-                        <li><a class="dropdown-item" href="{{ route('invoices.show', $item->id) }}">Ver</a></li>
                         <li><a class="dropdown-item" href="{{ route('invoices.edit', $item->id) }}">Editar</a></li>
                         <li><a class="dropdown-item" href="#">imprimir</a></li>
                         <li><a class="dropdown-item disabled" data-bs-toggle="modal" data-bs-target="#itemSendEmail" href="#">Enviar a correo</a></li>

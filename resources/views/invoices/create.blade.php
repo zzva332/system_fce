@@ -37,8 +37,8 @@
         <div class="card p-3 mb-3" id="item-1">
             <div class="row mb-3">
                 <div class="col-sm-6">
-                    <label for="product_id_1" class="form-label">Producto</label>
-                    <select name="product_id[]" id="product_id_1" class="form-control">
+                    <label for="productos_id_1" class="form-label">Producto</label>
+                    <select name="productos_id[]" id="productos_id_1" class="form-control">
                         <option value="" hidden>-- Seleccionar producto --</option>
                         @foreach($products as $item)
                             <option value="{{$item->product_id}}">{{ $item->product->name }}</option>
@@ -46,8 +46,8 @@
                     </select>
                 </div>
                 <div class="col-sm-6">
-                    <label for="count_1" class="form-label">Cantidad</label>
-                    <input type="text" name="count[]" id="count_1" class="form-control" />
+                    <label for="productos_count_1" class="form-label">Cantidad</label>
+                    <input type="text" name="productos_count[]" id="productos_count_1" class="form-control" />
                 </div>
             </div>
         </div>
@@ -57,16 +57,19 @@
         <div class="col-12">
             <label for="cliente" class="form-label">Seleccione el cliente a vincular (si no posee registre uno primero o deje vacio)</label>
             <select class="form-control form-control-md" name="cliente" id="cliente">
-                <option value="0" hidden>-- seleccionar documento --</option>
+                <option value="" hidden>-- seleccionar cliente (puede cambiarse despues) --</option>
                 @foreach($clients as $item)
                     <option value="{{ $item->id }}">({{ $item->document }}) {{ $item->name }} | {{ $item->email }}</option>
                 @endforeach
             </select>
+            @if ($errors->has('cliente'))
+                <span class="text-danger">{{ $errors->first('cliente') }}</span>
+            @endif
         </div>
     </div>
     <a href="{{ route('invoices.index') }}" class="btn btn-secondary">Regresar</a>
-    <button type="submit" class="btn btn-dark">Guardar</button>
-    <button type="submit" class="btn btn-dark">Guardar y visualizar</button>
+    <button type="submit" class="btn btn-dark" name="action" value="g">Guardar</button>
+    <button type="submit" class="btn btn-dark" name="action" value="gv">Guardar y visualizar</button>
 </form>
 
 @endsection
