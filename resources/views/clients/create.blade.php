@@ -30,9 +30,9 @@
             <label for="tipo_id" class="form-label">Tipo ID</label>
             <select name="tipo_id" id="tipo_id" class="form-control">
                 <option value="" hidden>-- seleccionar documento --</option>
-                <option value="CC">Cedula ciudadania</option>
-                <option value="CE">Cedula extranjeria</option>
-                <option value="TI">Tarjeta identidad</option>
+                @foreach($list_types_id as $item)
+                    <option value="{{$item['key']}}">{{$item['value']}}</option>
+                @endforeach
             </select>
             @if ($errors->has('tipo_id'))
                 <span class="text-danger">{{ $errors->first('tipo_id') }}</span>

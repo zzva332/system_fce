@@ -27,7 +27,9 @@ class ClientController extends Controller
      */
     public function create()
     {
-        return view('clients.create');
+        return view('clients.create',[
+            'list_types_id' => $this->get_type_id_list()
+        ]);
     }
 
     /**
@@ -80,7 +82,8 @@ class ClientController extends Controller
     {
         $item = Client::findOrFail($id);
         return view('clients.edit', [
-            'item' => $item
+            'item' => $item,
+            'list_types_id' => $this->get_type_id_list()
         ]);
     }
 
@@ -127,5 +130,13 @@ class ClientController extends Controller
         $client = Client::findOrFail($id);
         $client->delete();
         return redirect()->route('clients.index');
+    }
+
+    private function get_type_id_list(){
+        return [
+            ['key' => 'CC', 'value' => 'Cedula ciudadania'],
+            ['key' => 'CE', 'value' => 'Cedula extranjeria'],
+            ['key' => 'TI', 'value' => 'Tarjeta de identidad'],
+        ];
     }
 }

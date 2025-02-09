@@ -14,7 +14,7 @@
         <nav id="sidebar" class="expand">
             <div class="d-flex">
                 <button class="toggle-btn" type="button">
-                    <img src="images/logo-white.png"  width="32px" />
+                    <img src="/images/logo-white.png"  width="32px" />
                 </button>
                 <div class="sidebar-logo">
                     <a href="{{ route('dashboard') }}">System FCE</a>
@@ -35,10 +35,10 @@
                     </a>
                     <ul id="facturacion" class="sidebar-dropdown list-unstyled collapse" data-bs-parent="#sidebar">
                         <li class="sidebar-item">
-                            <a href="listar-facturas.html" class="sidebar-link"><i class="bi bi-list"></i> Todos</a>
+                            <a href="{{ route('invoices.index') }}" class="sidebar-link"><i class="bi bi-list"></i> Todos</a>
                         </li>
                         <li class="sidebar-item">
-                            <a href="crear-facturas.html" class="sidebar-link"><i class="bi bi-plus-square"></i> Crear</a>
+                            <a href="{{ route('invoices.create') }}" class="sidebar-link"><i class="bi bi-plus-square"></i> Crear</a>
                         </li>
                     </ul>
                 </li>
@@ -101,7 +101,7 @@
             </div>
         </main>
     </div>
-
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
     <script src="/bootstrap/bootstrap.bundle.min.js"></script>
     <script src="/js/script.js"></script>
 </body>

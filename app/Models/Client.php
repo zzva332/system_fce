@@ -15,4 +15,10 @@ class Client extends Model
         "type_id",
         "document"
     ];
+
+    public function get_type_id_name() {
+        if ($this->type_id == 'CE') return 'Cedula de extranjeria';
+        else if ($this->type_id == 'TI') return 'Tarjeta de identidad';
+        else return 'Cedula de identidad';
+    }
 }
