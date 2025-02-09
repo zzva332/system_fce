@@ -30,6 +30,9 @@
                     <option value="{{ $category }}" @if ($item->category_name == $category) selected="" @endif>{{ $category }}</option>
                 @endforeach
             </select>
+            @if ($errors->has('categoria'))
+                <span class="text-danger">{{ $errors->first('categoria') }}</span>
+            @endif
         </div>
     </div>
     <div id="info-productos" class="mb-3">
@@ -64,6 +67,25 @@
 
             </div>
         @endforeach
+        @if (!$has_products)
+            <div class="card p-3 mb-3" id="item-1">
+                <div class="row mb-3">
+                    <div class="col-sm-6">
+                        <label for="productos_id_1" class="form-label">Producto</label>
+                        <select name="productos_id[]" id="productos_id_1" class="form-control" required>
+                            <option value="" hidden>-- Seleccionar producto --</option>
+                            @foreach($products as $item)
+                                <option value="{{$item->product_id}}">{{ $item->product->name }}</option>
+                            @endforeach
+                        </select>
+                    </div>
+                    <div class="col-sm-6">
+                        <label for="productos_count_1" class="form-label">Cantidad</label>
+                        <input type="text" name="productos_count[]" id="productos_count_1" class="form-control" required />
+                    </div>
+                </div>
+            </div>
+        @endif
     </div>
     <div class="row mb-3">
         <h3 class="col-12 h4">Cliente</h3>

@@ -6,7 +6,6 @@ use App\Models\Client;
 use App\Models\Inventory;
 use App\Models\Invoice;
 use App\Models\InvoiceProduct;
-use App\Models\Product;
 use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -21,9 +20,9 @@ class InvoiceController extends Controller
      */
     public function index()
     {
-        $invoices = Invoice::all();
+        $invoices = Invoice::with(['products'])->simplePaginate(30);
         return view('invoices.index', [
-            'invoices' => $invoices
+            'invoices' => $invoices,
         ]);
     }
 
@@ -103,9 +102,11 @@ class InvoiceController extends Controller
     {
         $clients = Client::all();
         $item = Invoice::findOrFail($id);
+        $item->loadMissing(['products']);
         return view('invoices.edit', [
             'item' => $item,
             'products' => $this->product_list(),
+            'has_products' => $item->products->isNotEmpty(),
             'clients' => $clients,
             'categories' => $this->get_category_list(),
         ]);
@@ -167,15 +168,45 @@ class InvoiceController extends Controller
      */
     public function destroy($id)
     {
-        //$product = Invi::findOrFail($id);
-        //$product->delete();
+        $item = Invoice::findOrFail($id);
+        $item->loadMissing(['products']);
+
+        // solo permite eliminar si la factura no tiene productos asignados
+        if ($item->products->isNotEmpty()){
+            return redirect()->back();
+        }
+        $item->delete();
+
         return redirect()->route('invoices.index');
     }
 
     public function show($id) {
         $invoices = Invoice::findOrFail($id);
+        $invoices->loadMissing(['products']);
+        
+        $total_products = 0;
+        $total_iva = 0;
+        $total_discount = 0;
+        $count_products = 0;
+        foreach($invoices->products as $product) {
+            // total producto
+            $total_products += $product->gross_value;
+            $count_products += $product->count;
+            // descuento por producto
+            $discount = $product->gross_value * ($product->discount / 100);
+            $total_iva += ($product->gross_value - $discount) * ($product->iva / 100); 
+            $total_discount +=  $discount;
+        }
+
+        $total = $total_products + $total_iva + $total_discount;
+
         return view('invoices.show', [
-            'invoice' => $invoices
+            'invoice' => $invoices,
+            'count_products' => $count_products,
+            'total_discount' => number_format($total_discount, 0, ',', '.'),
+            'total_gross' => number_format($total_products, 0, ',', '.'),
+            'total_iva' => number_format($total_iva, 0, ',', '.'),
+            'total' => number_format($total, 0, ',', '.')
         ]);
     }
 

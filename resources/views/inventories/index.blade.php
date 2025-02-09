@@ -14,7 +14,7 @@
         <tr>
             <td>ID</td>
             <td>Nombre producto</td>
-            <td>Precio</td>
+            <td>Precio base</td>
             <td>Stock</td>
             <td>Iva</td>
             <td>Descuento</td>
@@ -26,10 +26,10 @@
             <tr>
                 <td><a href="{{ route('inventories.edit', $item->id) }}">#{{ $item->id }}</a></td>
                 <td>{{ $item->product->name }}</td>
-                <td>{{ $item->product->price }}</td>
+                <td>{{ number_format($item->product->price, 0, ',', '.') }} COP</td>
                 <td>{{ $item->stock }}</td>
-                <td>{{ $item->iva }}</td>
-                <td>{{ $item->discount }}</td>
+                <td>{{ $item->iva }}%</td>
+                <td>{{ $item->discount }}%</td>
                 <td>
                     <a href="{{ route('inventories.edit', $item->id) }}" class="btn btn-dark btn-sm"><i class="bi bi-pencil-square"></i></a>
                     <!-- <a href="#" class="btn btn-danger btn-sm" data-bs-toggle="modal" data-bs-target="#itemDelete"><i class="bi bi-trash3"></i></a> -->

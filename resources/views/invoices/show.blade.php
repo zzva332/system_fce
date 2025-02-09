@@ -49,7 +49,7 @@
                     <p>Producto: <span>{{ $product->product->name }}</span></p>
                     <p>Cantidad: <span>{{ $product->count }}</span></p>
                     <p>descuento: <span>{{ $product->discount}}%</span></p>
-                    <p>Precio: <span>{{ $product->gross_value }}</span></p>
+                    <p>Precio: <span>{{ number_format($product->gross_value, 0, ',', '.') }} COP</span></p>
                 </div>
             </div>
         @endforeach
@@ -59,10 +59,11 @@
     <div class="col-sm-6">
         <div class="card p-3">
             <h3>Total</h3>
-            <p>Valor de productos: <span>XXXXXXX</span></p>
-            <p>Valor de iva: <span>XXXXX</span></p>
-            <p>Valor de descuento: <span>XXXXXX</span></p>
-            <p>Valor total con impuestos: <span>XXXXXX</span></p>
+            <p>Cantidad de productos: <span>{{ $count_products }}</span></p>
+            <p>Valor total sin impuestos: <span>{{ $total_gross }} COP</span></p>
+            <p>Valor de descuento: <span>{{ $total_discount }} COP</span></p>
+            <p>Valor total de iva: <span>{{ $total_iva }} COP</span></p>
+            <p>Valor total con impuestos: <span>{{ $total }} COP</span></p>
         </div>
     </div>
 </div>

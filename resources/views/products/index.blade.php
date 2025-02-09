@@ -15,7 +15,7 @@
             <td>ID</td>
             <td>Codigo</td>
             <td>Nombre</td>
-            <td>Precio</td>
+            <td>Precio base</td>
             <td>Descripcion</td>
             <td>Opciones</td>
         </tr>
@@ -26,7 +26,7 @@
                 <td><a href="{{ route('products.edit', $item->id) }}">{{ $item->id }}</a></td>
                 <td>{{ $item->code }}</td>
                 <td>{{ $item->name }}</td>
-                <td>{{ $item->price }}</td>
+                <td>{{ number_format($item->price, 0, ',', '.') }} COP</td>
                 <td>{{ $item->description }}</td>
                 <td>
                     <a href="{{ route('products.edit', $item->id) }}" class="btn btn-dark btn-sm"><i class="bi bi-pencil-square"></i></a>

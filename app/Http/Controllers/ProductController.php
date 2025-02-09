@@ -42,7 +42,7 @@ class ProductController extends Controller
             'codigo' => 'required|max:255',
             'nombre' => 'required|max:255',
             'precio' => 'required|max:11',
-            'descripcion' => 'required',
+            'descripcion' => 'required|max:255',
         ]);
         $result = new Product([
             'code' => $validated["codigo"],
@@ -88,7 +88,7 @@ class ProductController extends Controller
             'codigo' => 'required|max:255',
             'nombre' => 'required|max:255',
             'precio' => 'required|max:11',
-            'descripcion' => 'required',
+            'descripcion' => 'required|max:255',
         ]);
 
         $item->code = $validated["codigo"];

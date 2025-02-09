@@ -41,12 +41,11 @@
                         <li><a class="dropdown-item disabled" data-bs-toggle="modal" data-bs-target="#itemSendEmail" href="#">Enviar a correo</a></li>
                         <li><hr class="dropdown-divider"></li>
                         <li>
-                            <!-- <form action="{{ route('invoices.destroy', $item->id) }}" method="post" class="d-inline-block">
+                            <form action="{{ route('invoices.destroy', $item->id) }}" method="post" class="d-inline-block">
                                 @method('DELETE')
                                 @csrf
-                                <button class="dropdown-item disabled"><i class="bi bi-trash3"></i></button>
-                            </form> -->
-                            <a class="dropdown-item disabled" data-bs-toggle="modal" data-bs-target="#itemDelete" href="#">Remover</a>
+                                <button class="dropdown-item @empty($item->products) disabled  @endempty"><i class="bi bi-trash3"></i> Remover</button>
+                            </form>
                         </li>
                     </ul>
                 </td>
@@ -54,5 +53,8 @@
         @endforeach
     </tbody>
 </table>
+<div class="d-flex justify-content-center">
+    {{ $invoices->links() }}
+</div>
 @endsection
 
