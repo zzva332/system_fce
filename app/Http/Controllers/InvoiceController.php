@@ -48,6 +48,7 @@ class InvoiceController extends Controller
     {
         $validated = $request->validate([
             'categoria' => 'required|max:255',
+            'cliente' => ''
         ]);
 
         $result = new Invoice([

@@ -33,14 +33,23 @@
                 </td>
                 <td>{{ \Carbon\Carbon::parse($item->update_at)->format('d-m-Y H:i:s') }}</td>
                 <td>
-                    <a href="{{ route('invoices.edit', $item->id) }}" class="btn btn-dark btn-sm"><i class="bi bi-pencil-square"></i></a>
-                    <!-- <a href="#" class="btn btn-danger btn-sm" data-bs-toggle="modal" data-bs-target="#itemDelete"><i class="bi bi-trash3"></i></a> -->
-                    <form action="{{ route('invoices.destroy', $item->id) }}" method="post" class="d-inline-block">
-                        @method('DELETE')
-                        @csrf
-                        <button class="btn btn-danger btn-sm"><i class="bi bi-trash3"></i></button>
-                    </form>
-
+                    <a href="{{ route('invoices.show', $item->id) }}" class="btn btn-dark btn-sm"><i class="bi bi-eye-fill"></i></a>
+                    <a href="#" class="btn btn-dark btn-sm" data-bs-toggle="dropdown" aria-expanded="false"><i class="bi bi-three-dots-vertical"></i></a>
+                    <ul class="dropdown-menu">
+                        <li><a class="dropdown-item" href="{{ route('invoices.show', $item->id) }}">Ver</a></li>
+                        <li><a class="dropdown-item" href="{{ route('invoices.edit', $item->id) }}">Editar</a></li>
+                        <li><a class="dropdown-item" href="#">imprimir</a></li>
+                        <li><a class="dropdown-item disabled" data-bs-toggle="modal" data-bs-target="#itemSendEmail" href="#">Enviar a correo</a></li>
+                        <li><hr class="dropdown-divider"></li>
+                        <li>
+                            <!-- <form action="{{ route('invoices.destroy', $item->id) }}" method="post" class="d-inline-block">
+                                @method('DELETE')
+                                @csrf
+                                <button class="dropdown-item disabled"><i class="bi bi-trash3"></i></button>
+                            </form> -->
+                            <a class="dropdown-item disabled" data-bs-toggle="modal" data-bs-target="#itemDelete" href="#">Remover</a>
+                        </li>
+                    </ul>
                 </td>
             </tr>
         @endforeach

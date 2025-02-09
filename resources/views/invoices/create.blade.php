@@ -13,8 +13,8 @@
     <div class="row mb-3">
         <h3 class="col-12 h4">Factura</h3>
         <div class="col-sm-6">
-            <label for="numeroFactura" class="form-label">Numero de factura</label>
-            <input type="text" name="numeroFactura" id="numeroFactura" class="form-control" value="0000-0000-0000-0000" disabled />
+            <label for="numeroFactura" class="form-label">Numero de factura reportada</label>
+            <input type="text" name="numeroFactura" id="numeroFactura" class="form-control" value="____-____-____-____" disabled />
         </div>
         <div class="col-sm-6">
             <label for="categoria" class="form-label">Categoria</label>
@@ -57,6 +57,7 @@
         <div class="col-12">
             <label for="cliente" class="form-label">Seleccione el cliente a vincular (si no posee registre uno primero o deje vacio)</label>
             <select class="form-control form-control-md" name="cliente" id="cliente">
+                <option value="0" hidden>-- seleccionar documento --</option>
                 @foreach($clients as $item)
                     <option value="{{ $item->id }}">({{ $item->document }}) {{ $item->name }} | {{ $item->email }}</option>
                 @endforeach
