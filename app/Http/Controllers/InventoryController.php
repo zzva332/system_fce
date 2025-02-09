@@ -61,7 +61,7 @@ class InventoryController extends Controller
             return redirect()->route('inventories.index');
         }
         return back()->withErrors([
-            'email' => 'The provided credentials do not match our records.',
+            'email' => 'Hubo un problema con este registro.',
         ])->onlyInput('nombre');
     }
 
@@ -105,7 +105,7 @@ class InventoryController extends Controller
             return redirect()->route('inventories.index');
         }
         return back()->withErrors([
-            'email' => 'The provided credentials do not match our records.',
+            'email' => 'Hubo un problema con este registro.',
         ])->onlyInput('nombre');
     }
 

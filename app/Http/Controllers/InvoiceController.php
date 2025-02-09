@@ -89,7 +89,7 @@ class InvoiceController extends Controller
                 return redirect()->route('invoices.show', [$result->id]);
         }
         return back()->withErrors([
-            'email' => 'The provided credentials do not match our records.',
+            'email' => 'Hubo un problema con este registro.',
         ])->onlyInput('nombre');
 
         return ;
@@ -169,7 +169,7 @@ class InvoiceController extends Controller
                 return redirect()->route('invoices.show', [$invoice->id]);
         }
         return back()->withErrors([
-            'email' => 'The provided credentials do not match our records.',
+            'email' => 'Hubo un problema con este registro.',
         ])->onlyInput('nombre');
     }
 
