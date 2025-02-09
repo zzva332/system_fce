@@ -42,7 +42,7 @@
                 <div class="row mb-3">
                     <div class="col-sm-6">
                         <label for="productos_id_{{$key}}" class="form-label">Producto</label>
-                        {{$product->product_id}}
+                        {{$key}}
                         <select name="productos_id[]" id="productos_id_{{$key}}" class="form-control">
                             <option value="" hidden>-- Seleccionar producto --</option>
                             @foreach($products as $item)
