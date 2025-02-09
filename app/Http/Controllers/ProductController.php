@@ -55,7 +55,7 @@ class ProductController extends Controller
             return redirect()->route('products.index');
         }
         return back()->withErrors([
-            'email' => 'The provided credentials do not match our records.',
+            'nombre' => 'The provided credentials do not match our records.',
         ])->onlyInput('nombre');
     }
 

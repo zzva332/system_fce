@@ -78,7 +78,9 @@ class InvoiceController extends Controller
         } catch (\Exception $e) {
             DB::rollback();
             $bool = false;
-            return $e->getMessage();
+            return back()->withErrors([
+                'categoria' => $e->getMessage(),
+            ])->onlyInput('categoria');
         }
 
         if ($bool) {
@@ -146,7 +148,9 @@ class InvoiceController extends Controller
         } catch (\Exception $e) {
             DB::rollback();
             $bool = false;
-            return $e->getMessage();
+            return back()->withErrors([
+                'categoria' => $e->getMessage(),
+            ])->onlyInput('categoria');
         }
         
         if($bool) {
@@ -155,8 +159,8 @@ class InvoiceController extends Controller
         }
 
         return back()->withErrors([
-            'email' => 'Hubo un problema con este registro.',
-        ])->onlyInput('nombre');
+            'categoria' => 'Hubo un problema con este registro.',
+        ])->onlyInput('categoria');
         return "";
     }
 

@@ -61,8 +61,8 @@ class InventoryController extends Controller
             return redirect()->route('inventories.index');
         }
         return back()->withErrors([
-            'email' => 'Hubo un problema con este registro.',
-        ])->onlyInput('nombre');
+            'producto_id' => 'Hubo un problema con este registro.',
+        ])->onlyInput('producto_id');
     }
 
     /**
@@ -105,8 +105,8 @@ class InventoryController extends Controller
             return redirect()->route('inventories.index');
         }
         return back()->withErrors([
-            'email' => 'Hubo un problema con este registro.',
-        ])->onlyInput('nombre');
+            'producto_id' => 'Hubo un problema con este registro.',
+        ])->onlyInput('producto_id');
     }
 
     /**

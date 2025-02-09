@@ -115,7 +115,7 @@ class ClientController extends Controller
             return redirect()->route('clients.index');
         }
         return back()->withErrors([
-            'email' => 'Hubo un problema con este registro',
+            'nombre' => 'Hubo un problema con este registro',
         ])->onlyInput('nombre');
     }
 
