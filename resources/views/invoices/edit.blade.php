@@ -40,35 +40,38 @@
         <div class="d-flex justify-content-end">
             <button type="button" id="add-new-products" class="btn btn-sm btn-dark"><i class="bi bi-plus-lg"></i></button>
         </div>
-        @empty(old('product_ids'))
-            @foreach($item->products as $key => $product)
-                <div class="card p-3 mb-3" id="item-{{$key + 1}}">
-                    <div class="row mb-3">
-                        <div class="col-sm-6">
-                            <label for="productos_id_{{$key}}" class="form-label">Producto</label>
-                            {{$key}}
-                            <select name="productos[{{$key}}][id]" id="productos_id_{{$key}}" class="form-control">
-                                <option value="" hidden>-- Seleccionar producto --</option>
-                                @foreach($products as $item)
-
-                                    <option value="{{$item->product_id}}" 
-                                        @if ($item->product_id == $product->product_id) selected="" @endif
-                                    >{{ $item->product->name }}</option>
-                                @endforeach
-                            </select>
-                        </div>
-                        <div class="col-sm-6">
-                            <label for="productos_count_{{$key}}" class="form-label">Cantidad</label>
-                            <input type="text" name="productos[{{$key}}][count]" id="productos_count_{{$key}}" class="form-control" value="{{ $product->count }}" />
-                        </div>
+        @foreach($item->products as $key => $product)
+            <div class="card p-3 mb-3" id="item-{{$key + 1}}">
+                <div class="row mb-3">
+                    <div class="col-sm-6">
+                        <label for="productos_id_{{$key}}" class="form-label">Producto</label>
+                        {{$key}}
+                        <select name="productos[{{$key}}][id]" id="productos_id_{{$key}}" class="form-control">
+                            <option value="" hidden>-- Seleccionar producto --</option>
+                            @foreach($products as $item)
+                                <option value="{{$item->product_id}}" 
+                                    @if ($item->product_id == $product->product_id) selected="" @endif
+                                >{{ $item->product->name }}</option>
+                            @endforeach
+                        </select>
+                        @if ($errors->has("productos.$key.id"))
+                            <span class="text-danger">{{ $errors->first("productos.$key.id") }}</span>
+                        @endif
                     </div>
-                    @if ($key != 0)
-                        <button type="button" class="btn btn-sm btn-dark remove-productos"><i class="bi bi-dash"></i></button>
-                    @endif
-
+                    <div class="col-sm-6">
+                        <label for="productos_count_{{$key}}" class="form-label">Cantidad</label>
+                        <input type="text" name="productos[{{$key}}][count]" id="productos_count_{{$key}}" class="form-control" value='{{ old("productos.$key.count") ? old("productos.$key.count") : $product->count }}' />
+                        @if ($errors->has("productos.$key.count"))
+                            <span class="text-danger">Este campo debe ser entero</span>
+                        @endif
+                    </div>
                 </div>
-            @endforeach
-        @endempty
+                @if ($key != 0)
+                    <button type="button" class="btn btn-sm btn-dark remove-productos"><i class="bi bi-dash"></i></button>
+                @endif
+
+            </div>
+        @endforeach
         
         @if (!$has_products)
             <div class="card p-3 mb-3" id="item-1">

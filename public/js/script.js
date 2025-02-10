@@ -28,7 +28,6 @@ function addProduct(){
     var input = newNode.querySelector('#productos_count_'+(lastItemId-1));
     newNode.querySelector('[for=productos_id_'+(lastItemId-1)+']').setAttribute('for', 'productos_id_'+(lastItemId)+'');
     newNode.querySelector('[for=productos_count_'+(lastItemId-1)+']').setAttribute('for', 'productos_count_'+(lastItemId)+'');
-
     select.setAttribute('name', 'productos['+(lastItemId)+'][id]')
     select.setAttribute('id', 'productos_id_'+(lastItemId))
     input.setAttribute('name', 'productos['+(lastItemId)+'][count]')

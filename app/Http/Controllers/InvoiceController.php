@@ -127,8 +127,8 @@ class InvoiceController extends Controller
         $validated = $request->validate([
             'categoria' => 'required|max:255',
             'cliente' => '',
-            'productos.*.id' => '',
-            'productos.*.count' => ''
+            'productos.*.id' => 'integer',
+            'productos.*.count' => 'integer'
         ]);
         $action = $request->input('action');
 
