@@ -27,7 +27,7 @@
             <select name="categoria" id="categoria" class="form-control">
                 <option value="" hidden>-- Seleccionar categoria --</option>
                 @foreach($categories as $category)
-                    <option value="{{ $category }}" @if ($item->category_name == $category) selected="" @endif>{{ $category }}</option>
+                    <option value="{{ $category }}" @if (($item->category_name == $category && !old('categoria')) || (old('categoria') && old('categoria') == $category)) selected="" @endif>{{ $category }}</option>
                 @endforeach
             </select>
             @if ($errors->has('categoria'))
@@ -93,8 +93,8 @@
             <label for="cliente" class="form-label">Seleccione el cliente a vincular (si no posee registre uno primero o deje vacio)</label>
             <select class="form-control form-control-md" name="cliente" id="cliente">
                 <option value="" hidden>-- seleccionar cliente (puede cambiarse despues) --</option>
-                @foreach($clients as $item)
-                    <option value="{{ $item->id }}">({{ $item->document }}) {{ $item->name }} | {{ $item->email }}</option>
+                @foreach($clients as $item2)
+                    <option value="{{ $item2->id }}" @if ((!old('cliente') && $client_id == $item2->id) || (old('cliente') && old('cliente') == $item2->id)) selected='' @endif>({{ $item2->document }}) {{ $item2->name }} | {{ $item2->email }}</option>
                 @endforeach
             </select>
         </div>

@@ -108,6 +108,7 @@ class InvoiceController extends Controller
         return view('invoices.edit', [
             'item' => $item,
             'products' => $this->product_list(),
+            'client_id' => $item->client_id,
             'has_products' => $item->products->isNotEmpty(),
             'clients' => $clients,
             'categories' => $this->get_category_list(),
@@ -234,7 +235,7 @@ class InvoiceController extends Controller
     }
     public function create_products($invoice_id, $products, $counts) {
 
-        if ($products == null || count($products) == 0) return;
+        if ($products == null || count($products) == 0 || empty($product[0])) return;
 
         for($i = 0; $i < count($products); $i++) {
             

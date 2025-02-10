@@ -14,14 +14,14 @@
     <div class="row mb-3">
         <div class="col-sm-6 mb-3">
             <label for="nombre" class="form-label">Nombre</label>
-            <input type="text" name="nombre" id="nombre" class="form-control"/>
+            <input type="text" name="nombre" id="nombre" class="form-control" value="{{ old('nombre') }}"/>
             @if ($errors->has('nombre'))
                 <span class="text-danger">{{ $errors->first('nombre') }}</span>
             @endif
         </div>
         <div class="col-sm-6 mb-3">
             <label for="email" class="form-label">Email</label>
-            <input type="email" name="email" id="email" class="form-control"/>
+            <input type="email" name="email" id="email" class="form-control" value="{{ old('email') }}"/>
             @if ($errors->has('email'))
                 <span class="text-danger">{{ $errors->first('email') }}</span>
             @endif

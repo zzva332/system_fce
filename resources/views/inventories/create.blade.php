@@ -17,7 +17,7 @@
             <select name="producto_id" id="producto_id" class="form-control">
                 <option value="" hidden>-- Seleccionar producto --</option>
                 @foreach($products as $product)
-                    <option value="{{ $product->id }}">{{ $product->name }}</option>
+                    <option value="{{ $product->id }}" @if (old('producto_id') == $product->id) selected @endif>{{ $product->name }}</option>
                 @endforeach
             </select>
             @if ($errors->has('producto_id'))
@@ -26,21 +26,21 @@
         </div>
         <div class="col-sm-6 mb-3">
             <label for="stock" class="form-label">Cantidad stock</label>
-            <input type="text" name="stock" id="stock" class="form-control"/>
+            <input type="text" name="stock" id="stock" class="form-control" value="{{ old('stock') }}"/>
             @if ($errors->has('stock'))
                 <span class="text-danger">{{ $errors->first('stock') }}</span>
             @endif
         </div>
         <div class="col-sm-6 mb-3">
             <label for="iva" class="form-label">Porcentaje iva</label>
-            <input type="text" name="iva" id="iva" class="form-control" placeholder="ej. 10, 20, 30"/>
+            <input type="text" name="iva" id="iva" class="form-control" placeholder="ej. 10, 20, 30" value="{{ old('iva') }}"/>
             @if ($errors->has('iva'))
                 <span class="text-danger">{{ $errors->first('iva') }}</span>
             @endif
         </div>
         <div class="col-sm-6 mb-3">
             <label for="descuento" class="form-label">Porcentaje descuento</label>
-            <input type="text" name="descuento" id="descuento" class="form-control" placeholder="ej. 10, 20, 30"/>
+            <input type="text" name="descuento" id="descuento" class="form-control" placeholder="ej. 10, 20, 30" value="{{ old('descuento') }}"/>
             @if ($errors->has('descuento'))
                 <span class="text-danger">{{ $errors->first('descuento') }}</span>
             @endif

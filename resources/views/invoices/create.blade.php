@@ -21,7 +21,7 @@
             <select name="categoria" id="categoria" class="form-control">
                 <option value="" hidden>-- Seleccionar categoria --</option>
                 @foreach($categories as $category)
-                    <option value="{{ $category }}">{{ $category }}</option>
+                    <option value="{{ $category }}" @if(old('categoria') == $category) selected @endif>{{ $category }}</option>
                 @endforeach
             </select>
             @if ($errors->has('categoria'))
@@ -59,7 +59,7 @@
             <select class="form-control form-control-md" name="cliente" id="cliente">
                 <option value="" hidden>-- seleccionar cliente (puede cambiarse despues) --</option>
                 @foreach($clients as $item)
-                    <option value="{{ $item->id }}">({{ $item->document }}) {{ $item->name }} | {{ $item->email }}</option>
+                    <option value="{{ $item->id }}" @if(old('cliente') == $item->id) selected @endif>({{ $item->document }}) {{ $item->name }} | {{ $item->email }}</option>
                 @endforeach
             </select>
             @if ($errors->has('cliente'))

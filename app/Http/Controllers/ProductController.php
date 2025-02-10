@@ -42,13 +42,13 @@ class ProductController extends Controller
             'codigo' => 'required|max:255',
             'nombre' => 'required|max:255',
             'precio' => 'required|max:11',
-            'descripcion' => 'required|max:255',
+            'descripcion' => 'max:255',
         ]);
         $result = new Product([
             'code' => $validated["codigo"],
             'name' => $validated["nombre"],
             'price' => $validated["precio"],
-            'description' => $validated["descripcion"],
+            'description' => empty($validated["descripcion"]) ? '' : $validated["descripcion"],
         ]);
 
         if ($result->save()) {
@@ -88,13 +88,13 @@ class ProductController extends Controller
             'codigo' => 'required|max:255',
             'nombre' => 'required|max:255',
             'precio' => 'required|max:11',
-            'descripcion' => 'required|max:255',
+            'descripcion' => 'max:255',
         ]);
 
         $item->code = $validated["codigo"];
         $item->name = $validated["nombre"];
         $item->price = $validated["precio"];
-        $item->description = $validated["descripcion"];
+        $item->description = empty($validated["descripcion"]) ? '' : $validated["descripcion"];
         $item->updated_at = $item->freshTimestamp();
 
         if ($item->save()) {

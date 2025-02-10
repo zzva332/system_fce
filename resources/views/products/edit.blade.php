@@ -20,28 +20,28 @@
         </div>
         <div class="col-sm-6 mb-3">
             <label for="codigo" class="form-label">Codigo</label>
-            <input type="text" name="codigo" id="codigo" class="form-control" value="{{ $item->code }}"/>
+            <input type="text" name="codigo" id="codigo" class="form-control" value="{{ old('codigo') ? old('codigo') : $item->code }}"/>
             @if ($errors->has('codigo'))
                 <span class="text-danger">{{ $errors->first('codigo') }}</span>
             @endif
         </div>
         <div class="col-sm-6 mb-3">
             <label for="nombre" class="form-label">Nombre</label>
-            <input type="text" name="nombre" id="nombre" class="form-control" value="{{ $item->name }}"/>
+            <input type="text" name="nombre" id="nombre" class="form-control" value="{{ old('nombre') ? old('nombre') : $item->name }}"/>
             @if ($errors->has('nombre'))
                 <span class="text-danger">{{ $errors->first('nombre') }}</span>
             @endif
         </div>
         <div class="col-sm-6 mb-3">
             <label for="precio" class="form-label">Precio</label>
-            <input type="text" name="precio" id="precio" class="form-control" value="{{ $item->price }}"/>
+            <input type="text" name="precio" id="precio" class="form-control" value="{{ old('precio') ? old('precio') : $item->price }}"/>
             @if ($errors->has('precio'))
                 <span class="text-danger">{{ $errors->first('precio') }}</span>
             @endif
         </div>
         <div class="col-sm-12 mb-3">
             <label for="descripcion" class="form-label">Descripcion</label>
-            <textarea name="descripcion" id="descripcion" class="form-control" rows="4">{{ $item->description }}</textarea>
+            <textarea name="descripcion" id="descripcion" class="form-control" rows="4">{{ old('descripcion') ? old('descripcion') : $item->description }}</textarea>
             @if ($errors->has('descripcion'))
                 <span class="text-danger">{{ $errors->first('descripcion') }}</span>
             @endif

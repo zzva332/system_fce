@@ -25,21 +25,21 @@
         </div>
         <div class="col-md-4 col-sm-6 mb-3">
             <label for="stock" class="form-label">Cantidad stock</label>
-            <input type="text" name="stock" id="stock" class="form-control" value="{{ $item->stock }}"/>
+            <input type="text" name="stock" id="stock" class="form-control" value="{{ old('stock') ? old('stock') : $item->stock }}"/>
             @if ($errors->has('stock'))
                 <span class="text-danger">{{ $errors->first('stock') }}</span>
             @endif
         </div>
         <div class="col-md-4 col-sm-6 mb-3">
             <label for="iva" class="form-label">Porcentaje iva</label>
-            <input type="text" name="iva" id="iva" class="form-control" value="{{ $item->iva }}"/>
+            <input type="text" name="iva" id="iva" class="form-control" value="{{ old('iva') ? old('iva') : $item->iva }}"/>
             @if ($errors->has('iva'))
                 <span class="text-danger">{{ $errors->first('iva') }}</span>
             @endif
         </div>
         <div class="col-md-4 col-sm-6 mb-3">
             <label for="descuento" class="form-label">Porcentaje descuento</label>
-            <input type="text" name="descuento" id="descuento" class="form-control" value="{{ $item->discount }}"/>
+            <input type="text" name="descuento" id="descuento" class="form-control" value="{{ old('descuento') ? old('descuento') : $item->discount }}"/>
             @if ($errors->has('descuento'))
                 <span class="text-danger">{{ $errors->first('descuento') }}</span>
             @endif

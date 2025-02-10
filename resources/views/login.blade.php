@@ -7,7 +7,7 @@
     <div class="card-body">
         <div class="mb-3">
             <label for="email" class="form-label">Email</label>
-            <input type="email" id="email" name="email" placeholder="example@example.com" class="form-control">
+            <input type="email" id="email" name="email" placeholder="example@example.com" class="form-control" value="{{ old('email') }}">
             @if ($errors->has('email'))
                 <span class="text-danger">{{ $errors->first('email') }}</span>
             @endif
