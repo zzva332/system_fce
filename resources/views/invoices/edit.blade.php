@@ -4,7 +4,7 @@
 
 @section('content')
 <div class="mb-4">
-    <h1 class="h2">Editar producto</h1>
+    <h1 class="h2">Editar factura</h1>
     <h2 class="h5">({{$item->id}} - {{$item->reference}})</h2>
     <hr />
 </div>

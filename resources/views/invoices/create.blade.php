@@ -4,7 +4,7 @@
 
 @section('content')
 <div class="mb-4">
-    <h1 class="h2">Crear producto</h1>
+    <h1 class="h2">Crear factura</h1>
     <hr />
 </div>
 
