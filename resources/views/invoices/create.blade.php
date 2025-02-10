@@ -29,11 +29,6 @@
             @endif
         </div>
     </div>
-    @if ($errors->has("invalid_inventario"))
-        <div class="alert alert-danger my-2">
-            {{$errors->first("invalid_inventario")}}
-        </div>
-    @endif
     <div id="info-productos" class="mb-3">
         <h3 class="h4">Productos</h3>
         <div class="d-flex justify-content-end">
@@ -50,10 +45,16 @@
                             <option value="{{$item->product_id}}" @if (old("productos.$i.id") == $item->product_id) selected @endif>{{ $item->product->name }}</option>
                         @endforeach
                     </select>
+                    @if ($errors->has("productos.$i.id"))
+                        <span class="text-danger">{{ $errors->first("productos.$i.id") }}</span>
+                    @endif
                 </div>
                 <div class="col-sm-6">
                     <label for="productos_count_{{$i}}" class="form-label">Cantidad</label>
                     <input type="text" name="productos[{{$i}}][count]" id="productos_count_{{$i}}" class="form-control" value='{{old("productos.$i.count")}}' />
+                    @if ($errors->has("productos.$i.count"))
+                        <span class="text-danger">{{ $errors->first("productos.$i.count") }}</span>
+                    @endif
                 </div>
             </div>
             @if ($i != 0)

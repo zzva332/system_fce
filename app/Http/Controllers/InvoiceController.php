@@ -58,7 +58,6 @@ class InvoiceController extends Controller
         ]);
 
         $action = $request->input('action');
-        $error = [];
         DB::beginTransaction();
         try {
 
@@ -70,18 +69,14 @@ class InvoiceController extends Controller
 
             if (!$result->save()) throw new Exception("Hubo un error al insertar el registro");
 
-            $error = $this->create_products(
+            $errors = $this->create_products(
                 $result->id,
                 $validated['productos']
             );
 
-            DB::rollBack();
-            
-            if ($error != null && !empty($error['errorCode'])){
+            if ($errors != null && count($errors) > 0){
                 DB::rollBack();
-                return back()->withErrors([
-                    $error['errorCode'] => $error['message'],
-                ])->withInput()->with('count_product', count($validated['productos']));
+                return back()->withErrors($errors)->withInput()->with('count_product', count($validated['productos']));
             }
             DB::commit();
             $bool = true;
@@ -150,10 +145,16 @@ class InvoiceController extends Controller
             if (!$invoice->save()) throw new Exception("Hubo un error al insertar el registro");
 
         
-            $this->update_product(
+            $errors = $this->update_product(
                 $id,
                 $validated['productos']
             );
+
+            if ($errors != null && count($errors) > 0){
+                DB::rollBack();
+                return back()->withErrors($errors)->withInput()->with('count_product', count($validated['productos']));
+            }
+
             DB::commit();
             $bool = true;
         } catch (\Exception $e) {
@@ -226,7 +227,7 @@ class InvoiceController extends Controller
     }
 
     public function product_list(){
-        $products = Inventory::all();
+        $products = Inventory::where('stock', '>', '0')->get();
         return $products;
     }
     public function get_category_list() {
@@ -245,19 +246,22 @@ class InvoiceController extends Controller
     }
     public function create_products($invoice_id, $products) {
 
-        if ($products == null || count($products) == 0 || empty($products[0])) return;
+        if ($products == null || count($products) == 0 || empty($products[0])) return [];
 
+        $errors = [];
+        $index=-1;
         foreach($products as $product) {
+            $index++;
             $inventory = Inventory::where('product_id', '=', $product['id'])->first();
             $inventory->loadMissing(['product']);
 
-            
             if (intval($inventory->stock) < intval($product['count'])){
-                return [
-                    'message' => "El inventario del producto ". $inventory->product->name ." fue excedido",
-                    'errorCode' => 'invalid_inventario',
-                ];
+                $errors["productos.$index.count"] = 'El inventario de este producto fue excedido';
+                continue;
             }
+
+            $inventory->stock -= intval($product['count']);
+            $inventory->save();
             
             $price = doubleval($inventory->product->price);
             $iva = intval($inventory->iva) / 100;
@@ -276,23 +280,44 @@ class InvoiceController extends Controller
             ]);
             $item->save();
         }
-        return null;
+        return $errors;
     }
     public function update_product($invoice_id, $products) {
 
         // remueve los productos que ya no van a estar
-
+        $errors = [];
         $ids = array_map(function($p){
             return $p['id'];
         },$products);
 
+        $itemRestores = InvoiceProduct::where('invoice_id', '=',$invoice_id)->whereNotIn('product_id', $ids)->get();
 
-        
+        foreach($itemRestores as $item) {
+            $inventory = Inventory::where('product_id', '=', $item[])->first();
+            $inventory->stock += $item->count;
+            $inventory->save();
+        }
         InvoiceProduct::where('invoice_id', '=',$invoice_id)->whereNotIn('product_id', $ids)->delete();
 
+        $index = -1; 
         foreach($products as $product) {
+            $index++;
             $item = InvoiceProduct::where('invoice_id', '=',$invoice_id)->where('product_id', '=', $product['id'])->first();
             $inventory = Inventory::where('product_id', '=', $product['id'])->first();
+            
+            // si existe el elemento suma la cantidad al stock para evitar perder productos
+            if ($item){
+                $inventory->stock += $item->count;
+            }
+
+            if (intval($inventory->stock) < intval($product['count'])){
+                $errors["productos.$index.count"] = 'El inventario de este producto fue excedido';
+                continue;
+            }
+            
+            $inventory->stock -= intval($product['count']);
+            $inventory->save();
+
             $inventory->loadMissing(['product']);
             $price = doubleval($inventory->product->price);
             $iva = intval($inventory->iva) / 100;
@@ -313,6 +338,6 @@ class InvoiceController extends Controller
             
             $item->save();
         }
-
+        return $errors;
     }
 }

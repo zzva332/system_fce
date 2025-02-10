@@ -19,8 +19,8 @@
     <div class="col-12 col-md col-sm-6 mb-4">
         <div class="card p-2 d-flex justify-content-center align-items-center">
             <span class="h1"><i class="bi bi-clock"></i></span>
-            <span class="h2">93</span>
-            <span>Facturacion semana pasada</span>
+            <span class="h2">{{ $totalNoInventarios }}</span>
+            <span>Productos sin asignacion de inventario</span>
         </div>
     </div>
     <div class="col-12 col-md col-sm-6 mb-4">
