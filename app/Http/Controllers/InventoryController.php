@@ -15,7 +15,7 @@ class InventoryController extends Controller
      */
     public function index()
     {
-        $inventories = Inventory::all();
+        $inventories = Inventory::simplePaginate(15);
         return view('inventories.index', [
             'inventories' => $inventories
         ]);

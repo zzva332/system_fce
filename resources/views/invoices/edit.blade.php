@@ -25,7 +25,7 @@
         <div class="col-md-4 col-sm-6">
             <label for="categoria" class="form-label">Categoria</label>
             <select name="categoria" id="categoria" class="form-control">
-                <option value="" hidden>-- Seleccionar categoria --</option>
+                <option value="">-- Seleccionar categoria --</option>
                 @foreach($categories as $category)
                     <option value="{{ $category }}" @if (($item->category_name == $category && !old('categoria')) || (old('categoria') && old('categoria') == $category)) selected="" @endif>{{ $category }}</option>
                 @endforeach
@@ -40,33 +40,36 @@
         <div class="d-flex justify-content-end">
             <button type="button" id="add-new-products" class="btn btn-sm btn-dark"><i class="bi bi-plus-lg"></i></button>
         </div>
-        @foreach($item->products as $key => $product)
-            <div class="card p-3 mb-3" id="item-{{$key + 1}}">
-                <div class="row mb-3">
-                    <div class="col-sm-6">
-                        <label for="productos_id_{{$key}}" class="form-label">Producto</label>
-                        {{$key}}
-                        <select name="productos_id[]" id="productos_id_{{$key}}" class="form-control">
-                            <option value="" hidden>-- Seleccionar producto --</option>
-                            @foreach($products as $item)
+        @empty(old('product_ids'))
+            @foreach($item->products as $key => $product)
+                <div class="card p-3 mb-3" id="item-{{$key + 1}}">
+                    <div class="row mb-3">
+                        <div class="col-sm-6">
+                            <label for="productos_id_{{$key}}" class="form-label">Producto</label>
+                            {{$key}}
+                            <select name="productos[{{$key}}][id]" id="productos_id_{{$key}}" class="form-control">
+                                <option value="" hidden>-- Seleccionar producto --</option>
+                                @foreach($products as $item)
 
-                                <option value="{{$item->product_id}}" 
-                                    @if ($item->product_id == $product->product_id) selected="" @endif
-                                >{{ $item->product->name }}</option>
-                            @endforeach
-                        </select>
+                                    <option value="{{$item->product_id}}" 
+                                        @if ($item->product_id == $product->product_id) selected="" @endif
+                                    >{{ $item->product->name }}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                        <div class="col-sm-6">
+                            <label for="productos_count_{{$key}}" class="form-label">Cantidad</label>
+                            <input type="text" name="productos[{{$key}}][count]" id="productos_count_{{$key}}" class="form-control" value="{{ $product->count }}" />
+                        </div>
                     </div>
-                    <div class="col-sm-6">
-                        <label for="productos_count{{$key}}" class="form-label">Cantidad</label>
-                        <input type="text" name="productos_count[]" id="productos_count{{$key}}" class="form-control" value="{{ $product->count }}" />
-                    </div>
+                    @if ($key != 0)
+                        <button type="button" class="btn btn-sm btn-dark remove-productos"><i class="bi bi-dash"></i></button>
+                    @endif
+
                 </div>
-                @if ($key != 0)
-                    <button type="button" class="btn btn-sm btn-dark remove-productos"><i class="bi bi-dash"></i></button>
-                @endif
-
-            </div>
-        @endforeach
+            @endforeach
+        @endempty
+        
         @if (!$has_products)
             <div class="card p-3 mb-3" id="item-1">
                 <div class="row mb-3">

@@ -44,7 +44,7 @@
     <h3 class="text-center">Productos</h3>
     <div class="row">
         @foreach ($invoice->products as $product)
-            <div class="col-12 col-sm-4">
+            <div class="col-12 col-sm-4 mb-3">
                 <div class="card p-2">
                     <p>Producto: <span>{{ $product->product->name }}</span></p>
                     <p>Cantidad: <span>{{ $product->count }}</span></p>

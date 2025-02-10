@@ -23,6 +23,17 @@ function addProduct(){
     var newNode = lastItem.cloneNode(true);
     newNode.id = "item-" + (lastItemId + 1);
 
+    // cambia los identificadores de los elementos
+    var select = newNode.querySelector('#productos_id_'+(lastItemId-1));
+    var input = newNode.querySelector('#productos_count_'+(lastItemId-1));
+    newNode.querySelector('[for=productos_id_'+(lastItemId-1)+']').setAttribute('for', 'productos_id_'+(lastItemId)+'');
+    newNode.querySelector('[for=productos_count_'+(lastItemId-1)+']').setAttribute('for', 'productos_count_'+(lastItemId)+'');
+
+    select.setAttribute('name', 'productos['+(lastItemId)+'][id]')
+    select.setAttribute('id', 'productos_id_'+(lastItemId))
+    input.setAttribute('name', 'productos['+(lastItemId)+'][count]')
+    input.setAttribute('id', 'productos_count_'+(lastItemId))
+
     var btnRemove = newNode.querySelector(".remove-productos");
     if(btnRemove == null){
         var btnRemove = document.createElement("button");

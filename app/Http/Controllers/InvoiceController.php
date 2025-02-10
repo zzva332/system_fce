@@ -20,7 +20,7 @@ class InvoiceController extends Controller
      */
     public function index()
     {
-        $invoices = Invoice::with(['products'])->simplePaginate(30);
+        $invoices = Invoice::orderBy('updated_at', 'desc')->simplePaginate(30);
         return view('invoices.index', [
             'invoices' => $invoices,
         ]);
@@ -52,8 +52,11 @@ class InvoiceController extends Controller
         $bool = true;
         $validated = $request->validate([
             'categoria' => 'required|max:255',
-            'cliente' => ''
+            'cliente' => '',
+            'productos.*.id' => '',
+            'productos.*.count' => ''
         ]);
+
         $action = $request->input('action');
         DB::beginTransaction();
         try {
@@ -68,11 +71,8 @@ class InvoiceController extends Controller
 
             $this->create_products(
                 $result->id,
-                $request->input('productos_id'),
-                $request->input('productos_count')
+                $validated['productos']
             );
-            
-            
             DB::commit();
             $bool = true;
         } catch (\Exception $e) {
@@ -126,7 +126,9 @@ class InvoiceController extends Controller
     {
         $validated = $request->validate([
             'categoria' => 'required|max:255',
-            'cliente' => ''
+            'cliente' => '',
+            'productos.*.id' => '',
+            'productos.*.count' => ''
         ]);
         $action = $request->input('action');
 
@@ -141,8 +143,7 @@ class InvoiceController extends Controller
         
             $this->update_product(
                 $id,
-                $request->input('productos_id'),
-                $request->input('productos_count')
+                $validated['productos']
             );
             DB::commit();
             $bool = true;
@@ -233,13 +234,12 @@ class InvoiceController extends Controller
             "Otros"
         ];
     }
-    public function create_products($invoice_id, $products, $counts) {
+    public function create_products($invoice_id, $products) {
 
-        if ($products == null || count($products) == 0 || empty($product[0])) return;
+        if ($products == null || count($products) == 0 || empty($products[0])) return;
 
-        for($i = 0; $i < count($products); $i++) {
-            
-            $inventory = Inventory::findOrFail($products[$i]);
+        foreach($products as $product) {
+            $inventory = Inventory::where('product_id', '=', $product['id'])->first();
             $inventory->loadMissing(['product']);
 
             $price = doubleval($inventory->product->price);
@@ -251,7 +251,7 @@ class InvoiceController extends Controller
             $item = new InvoiceProduct([
                 'product_id' => $inventory->product->id,
                 'invoice_id' => $invoice_id,
-                'count' => $counts[$i],
+                'count' => $product['count'],
                 'gross_value' => $price,
                 'iva' => $inventory->iva,
                 'discount' => $inventory->discount,
@@ -260,15 +260,21 @@ class InvoiceController extends Controller
             $item->save();
         }
     }
-    public function update_product($invoice_id, $products, $counts) {
+    public function update_product($invoice_id, $products) {
 
         // remueve los productos que ya no van a estar
-        InvoiceProduct::where('invoice_id', '=',$invoice_id)->whereNotIn('product_id', $products)->delete();
 
-        for($i = 0; $i < count($products); $i++) {
-            
-            $item = InvoiceProduct::where('invoice_id', '=',$invoice_id)->where('product_id', '=', $products[$i])->first();
-            $inventory = Inventory::findOrFail($products[$i]);
+        $ids = array_map(function($p){
+            return $p['id'];
+        },$products);
+
+
+        
+        InvoiceProduct::where('invoice_id', '=',$invoice_id)->whereNotIn('product_id', $ids)->delete();
+
+        foreach($products as $product) {
+            $item = InvoiceProduct::where('invoice_id', '=',$invoice_id)->where('product_id', '=', $product['id'])->first();
+            $inventory = Inventory::where('product_id', '=', $product['id'])->first();
             $inventory->loadMissing(['product']);
             $price = doubleval($inventory->product->price);
             $iva = intval($inventory->iva) / 100;
@@ -283,7 +289,7 @@ class InvoiceController extends Controller
                 $item->iva = $inventory->iva;
                 $item->discount = $inventory->discount;
             }
-            $item->count = $counts[$i];
+            $item->count = $product['count'];
             $item->gross_value = $price;
             $item->net_value = $total * $inventory->iva;
             

@@ -37,8 +37,8 @@
         <div class="card p-3 mb-3" id="item-1">
             <div class="row mb-3">
                 <div class="col-sm-6">
-                    <label for="productos_id_1" class="form-label">Producto</label>
-                    <select name="productos_id[]" id="productos_id_1" class="form-control">
+                    <label for="productos_id_0" class="form-label">Producto</label>
+                    <select name="productos[0][id]" id="productos_id_0" class="form-control">
                         <option value="" hidden>-- Seleccionar producto --</option>
                         @foreach($products as $item)
                             <option value="{{$item->product_id}}">{{ $item->product->name }}</option>
@@ -46,8 +46,8 @@
                     </select>
                 </div>
                 <div class="col-sm-6">
-                    <label for="productos_count_1" class="form-label">Cantidad</label>
-                    <input type="text" name="productos_count[]" id="productos_count_1" class="form-control" />
+                    <label for="productos_count_0" class="form-label">Cantidad</label>
+                    <input type="text" name="productos[0][count]" id="productos_count_0" class="form-control" />
                 </div>
             </div>
         </div>
