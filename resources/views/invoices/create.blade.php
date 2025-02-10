@@ -29,28 +29,38 @@
             @endif
         </div>
     </div>
+    @if ($errors->has("invalid_inventario"))
+        <div class="alert alert-danger my-2">
+            {{$errors->first("invalid_inventario")}}
+        </div>
+    @endif
     <div id="info-productos" class="mb-3">
         <h3 class="h4">Productos</h3>
         <div class="d-flex justify-content-end">
             <button type="button" id="add-new-products" class="btn btn-sm btn-dark"><i class="bi bi-plus-lg"></i></button>
         </div>
-        <div class="card p-3 mb-3" id="item-1">
+        @for ($i = 0; $i < (session('count_product') ?? 1); $i++)
+        <div class="card p-3 mb-3" id="item-{{$i+1}}">
             <div class="row mb-3">
                 <div class="col-sm-6">
-                    <label for="productos_id_0" class="form-label">Producto</label>
-                    <select name="productos[0][id]" id="productos_id_0" class="form-control">
+                    <label for="productos_id_{{$i}}" class="form-label">Producto</label>
+                    <select name="productos[{{$i}}][id]" id="productos_id_{{$i}}" class="form-control">
                         <option value="" hidden>-- Seleccionar producto --</option>
                         @foreach($products as $item)
-                            <option value="{{$item->product_id}}">{{ $item->product->name }}</option>
+                            <option value="{{$item->product_id}}" @if (old("productos.$i.id") == $item->product_id) selected @endif>{{ $item->product->name }}</option>
                         @endforeach
                     </select>
                 </div>
                 <div class="col-sm-6">
-                    <label for="productos_count_0" class="form-label">Cantidad</label>
-                    <input type="text" name="productos[0][count]" id="productos_count_0" class="form-control" />
+                    <label for="productos_count_{{$i}}" class="form-label">Cantidad</label>
+                    <input type="text" name="productos[{{$i}}][count]" id="productos_count_{{$i}}" class="form-control" value='{{old("productos.$i.count")}}' />
                 </div>
             </div>
+            @if ($i != 0)
+                <button type="button" class="btn btn-sm btn-dark remove-productos"><i class="bi bi-dash"></i></button>
+            @endif
         </div>
+        @endfor
     </div>
     <div class="row mb-3">
         <h3 class="col-12 h4">Cliente</h3>

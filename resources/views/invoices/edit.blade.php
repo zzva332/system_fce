@@ -35,6 +35,11 @@
             @endif
         </div>
     </div>
+    @if ($errors->has("error"))
+    <div class="alert alert-danger my-2">
+        $errors->first("error")
+    </div>
+    @endif
     <div id="info-productos" class="mb-3">
         <h3 class="h4">Productos</h3>
         <div class="d-flex justify-content-end">

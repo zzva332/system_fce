@@ -58,6 +58,7 @@ class InvoiceController extends Controller
         ]);
 
         $action = $request->input('action');
+        $error = [];
         DB::beginTransaction();
         try {
 
@@ -69,18 +70,27 @@ class InvoiceController extends Controller
 
             if (!$result->save()) throw new Exception("Hubo un error al insertar el registro");
 
-            $this->create_products(
+            $error = $this->create_products(
                 $result->id,
                 $validated['productos']
             );
+
+            DB::rollBack();
+            
+            if ($error != null && !empty($error['errorCode'])){
+                DB::rollBack();
+                return back()->withErrors([
+                    $error['errorCode'] => $error['message'],
+                ])->withInput()->with('count_product', count($validated['productos']));
+            }
             DB::commit();
             $bool = true;
         } catch (\Exception $e) {
             DB::rollback();
             $bool = false;
             return back()->withErrors([
-                'categoria' => $e->getMessage(),
-            ])->onlyInput('categoria');
+                'invalid_inventario' => $e->getMessage(),
+            ]);
         }
 
         if ($bool) {
@@ -131,7 +141,6 @@ class InvoiceController extends Controller
             'productos.*.count' => 'integer'
         ]);
         $action = $request->input('action');
-
         DB::beginTransaction();
         try {
             $invoice = Invoice::findOrFail($id);
@@ -242,6 +251,14 @@ class InvoiceController extends Controller
             $inventory = Inventory::where('product_id', '=', $product['id'])->first();
             $inventory->loadMissing(['product']);
 
+            
+            if (intval($inventory->stock) < intval($product['count'])){
+                return [
+                    'message' => "El inventario del producto ". $inventory->product->name ." fue excedido",
+                    'errorCode' => 'invalid_inventario',
+                ];
+            }
+            
             $price = doubleval($inventory->product->price);
             $iva = intval($inventory->iva) / 100;
             $discount = intval($inventory->discount) / 100;
@@ -259,6 +276,7 @@ class InvoiceController extends Controller
             ]);
             $item->save();
         }
+        return null;
     }
     public function update_product($invoice_id, $products) {
 
