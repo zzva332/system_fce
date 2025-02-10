@@ -55,7 +55,7 @@
                             <select name="productos[{{$key}}][id]" id="productos_id_{{$key}}" class="form-control">
                                 <option value="" hidden>-- Seleccionar producto --</option>
                                 @foreach($products as $item)
-                                    <option value="{{$item->product_id}}" @if (old("productos.$key.id") == $item->product_id) selected @endif>{{ $item->product->name }}</option>
+                                    <option value="{{$item->product_id}}" @if (old("productos.$key.id") == $item->product_id) selected @endif>({{$item->stock}}) {{ $item->product->name }}</option>
                                 @endforeach
                             </select>
                             @if ($errors->has("productos.$key.id"))
@@ -88,7 +88,7 @@
                                 @foreach($products as $item)
                                     <option value="{{$item->product_id}}" 
                                         @if ($item->product_id == $product->product_id) selected="" @endif
-                                    >{{ $item->product->name }}</option>
+                                    >({{$item->stock}}) {{ $item->product->name }}</option>
                                 @endforeach
                             </select>
                             @if ($errors->has("productos.$key.id"))
@@ -119,7 +119,7 @@
                         <select name="productos_id[]" id="productos_id_1" class="form-control" required>
                             <option value="" hidden>-- Seleccionar producto --</option>
                             @foreach($products as $item)
-                                <option value="{{$item->product_id}}">{{ $item->product->name }}</option>
+                                <option value="{{$item->product_id}}">({{$item->stock}}) {{ $item->product->name }}</option>
                             @endforeach
                         </select>
                     </div>
