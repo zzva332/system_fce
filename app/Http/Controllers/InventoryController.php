@@ -46,9 +46,9 @@ class InventoryController extends Controller
     {
         $validated = $request->validate([
             'producto_id' => 'required',
-            'stock' => 'required|max:255',
-            'iva' => 'required|max:11',
-            'descuento' => 'required',
+            'stock' => 'required|max:255|integer',
+            'iva' => 'required|max:11|integer',
+            'descuento' => 'required|integer',
         ]);
         $result = new Inventory([
             'product_id' => $validated["producto_id"],
@@ -92,8 +92,8 @@ class InventoryController extends Controller
 
         $validated = $request->validate([
             'stock' => 'required|max:255',
-            'iva' => 'required|max:3',
-            'descuento' => 'required|max:3'
+            'iva' => 'required|max:3|integer',
+            'descuento' => 'required|max:3|integer'
         ]);
 
         $item->stock = $validated["stock"];
