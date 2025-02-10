@@ -293,7 +293,7 @@ class InvoiceController extends Controller
         $itemRestores = InvoiceProduct::where('invoice_id', '=',$invoice_id)->whereNotIn('product_id', $ids)->get();
 
         foreach($itemRestores as $item) {
-            $inventory = Inventory::where('product_id', '=', $item[])->first();
+            $inventory = Inventory::where('product_id', '=', $item->product_id)->first();
             $inventory->stock += $item->count;
             $inventory->save();
         }
